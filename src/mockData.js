@@ -28,7 +28,6 @@ export const products = [
   { id: 10, barcode: "SP1010", product_name: "Dumbbells 5kg", category_id: 5, cost_price: 25, selling_price: 50, quantity: 15 },
 ];
 
-// HELPER: Generate random number between min and max
 const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 // TRANSACTIONS
@@ -77,3 +76,77 @@ export const sales = {
     { year: 2025, revenue: transactions.reduce((a, t) => a + t.total_amount, 0), volume: transactions.reduce((a, t) => a + t.quantity, 0) },
   ],
 };
+
+// Notifications
+export const notifications = [
+  {
+    id: 1,
+    type: "info", // info, warning, success, error
+    message: "New product 'Basketball Pro 3000' added to inventory.",
+    date: new Date("2025-11-18T09:30:00"),
+    read: false,
+  },
+  {
+    id: 2,
+    type: "warning",
+    message: "Stock for 'Tennis Racket X1' is below reorder level.",
+    date: new Date("2025-11-18T10:00:00"),
+    read: false,
+  },
+  {
+    id: 3,
+    type: "success",
+    message: "Sale completed by cashier Jane Doe: PHP 3,500",
+    date: new Date("2025-11-18T11:15:00"),
+    read: true,
+  },
+  {
+    id: 4,
+    type: "error",
+    message: "Failed to update product 'Soccer Ball Elite' in inventory.",
+    date: new Date("2025-11-17T16:45:00"),
+    read: true,
+  },
+  {
+    id: 5,
+    type: "info",
+    message: "New user 'Mark Spencer' has been added as staff.",
+    date: new Date("2025-11-17T14:20:00"),
+    read: false,
+  },
+  {
+    id: 6,
+    type: "warning",
+    message: "Low stock alert: 'Gym Mat 200cm'.",
+    date: new Date("2025-11-16T18:05:00"),
+    read: false,
+  },
+  {
+    id: 7,
+    type: "success",
+    message: "Inventory check completed for all categories.",
+    date: new Date("2025-11-16T12:00:00"),
+    read: true,
+  },
+  {
+    id: 8,
+    type: "info",
+    message: "New promotion started: 'Buy 1 Take 1 Yoga Ball'.",
+    date: new Date("2025-11-15T08:45:00"),
+    read: false,
+  },
+  {
+    id: 9,
+    type: "warning",
+    message: "User 'John Doe' attempted to access unauthorized page.",
+    date: new Date("2025-11-14T17:30:00"),
+    read: true,
+  },
+  {
+    id: 10,
+    type: "success",
+    message: "Point-of-sale system updated successfully.",
+    date: new Date("2025-11-14T09:00:00"),
+    read: true,
+  }
+];
