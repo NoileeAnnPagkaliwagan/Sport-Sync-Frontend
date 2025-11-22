@@ -1,5 +1,6 @@
 import Layout from "../components/Layout";
 import KpiCard from "../components/KpiCard";
+import Chart from "../components/Chart";
 import { DollarSign, ShoppingCart, Boxes, AlertTriangle, ArrowUp } from "lucide-react";
 import { sales } from "../mockData.js";
 import {
@@ -7,8 +8,10 @@ import {
   getTransactionsByDate,
   percentChange,
   countLowStock,
-  countOutOfStock
-} from "../utils/KpiUtils";
+  countOutOfStock,
+  weeklyLabels,
+  weeklyRevenue,
+} from "../utils/Utils.js";
 
 
 export default function Dashboard() {
@@ -81,6 +84,13 @@ export default function Dashboard() {
               value={outOfStock}
               description={<>Items requiring immediate attention</>}
             />
+        </div>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        
+
+
+          
         </div>
     </Layout>
   );
