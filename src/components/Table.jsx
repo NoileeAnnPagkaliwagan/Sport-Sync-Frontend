@@ -57,14 +57,14 @@ export default function Table({ tableName, columns = [], data = [], rowsPerPage 
             <button
                 onClick={goPrev}
                 disabled={currentPage === 1}
-                className="px-3 py-1 bg-gray-200 text-gray-700 rounded disabled:opacity-50 flex items-center justify-center hover:bg-blueSlate"
+                className="px-3 py-1 bg-gray-200 text-gray-700 rounded disabled:opacity-50 flex items-center justify-center hover:bg-darkGreen hover:text-softWhite"
             >
                 <ArrowLeft size={16} />
             </button>
             <button
                 onClick={goNext}
                 disabled={currentPage === totalPages}
-                className="px-3 py-1 bg-gray-200 text-gray-700 rounded disabled:opacity-50 flex items-center justify-center hover:bg-blueSlate"
+                className="px-3 py-1 bg-gray-200 text-gray-700 rounded disabled:opacity-50 flex items-center justify-center hover:bg-darkGreen hover:text-softWhite"
             >
                 <ArrowRight size={16} />
             </button>

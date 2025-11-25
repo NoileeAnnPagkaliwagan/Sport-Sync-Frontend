@@ -52,13 +52,13 @@ export default function Inventory() {
       user.role === "Admin" || user.role === "Staff" ? (
         <div className="flex gap-2">
           <button
-            className="p-2 text-white rounded hover:bg-lightGray flex items-center justify-center"
+            className="p-2 text-Blue rounded hover:bg-lightGray flex items-center justify-center"
             onClick={() => console.log("Edit", p)}
           >
             <Edit size={16} />
           </button>
           <button
-            className="p-2 text-white rounded hover:bg-lightGray flex items-center justify-center"
+            className="p-2 text-navyBlue rounded hover:bg-lightGray flex items-center justify-center"
             onClick={() => console.log("Adjust", p)}
           >
             <PlusCircle size={16} />
@@ -69,11 +69,11 @@ export default function Inventory() {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-softWhite p-6">
+      <div className="space-y-5">
 
         {/* Header Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <div className="mb-5">
+          <h1 className="page-title">
             Inventory
           </h1>
           <p className="text-gray-600">
@@ -117,7 +117,6 @@ export default function Inventory() {
         </div>
 
         {/* Table */}
-        <h1 className="page-title mt-10">All Products Inventory</h1>
         <Table 
           tableName="All Products Inventory" 
           columns={columns} 
