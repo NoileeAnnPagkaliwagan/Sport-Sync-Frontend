@@ -42,7 +42,7 @@
 
 @layer components {
     .page-title {
-        @apply text-3xl font-bold text-charcoalBlack mb-2;
+        @apply text-2xl font-bold text-charcoalBlack mb-2;
     }
 
     .default-container {
