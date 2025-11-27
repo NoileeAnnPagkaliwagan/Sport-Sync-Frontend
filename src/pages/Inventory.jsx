@@ -213,13 +213,29 @@ export default function Inventory() {
       <div className="space-y-5">
 
         {/* Header Section */}
-        <div className="mb-5">
-          <h1 className="page-title">
-            Inventory
-          </h1>
-          <p className="text-gray-600">
-            Manage your sports equipment and stock levels
-          </p>
+        <div className="mb-5 flex justify-between items-start">
+          <div>
+            <h1 className="page-title">
+              Inventory
+            </h1>
+            <p className="text-gray-600">
+              Manage your sports equipment and stock levels
+            </p>
+          </div>
+          
+          {/* Add Product Button */}
+          {(user.role === "Admin" || user.role === "Staff") && (
+            <button 
+              onClick={() => console.log("Add Product clicked")}
+              className="text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+              style={{ backgroundColor: '#004B8D' }}
+              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#003366'}
+              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#004B8D'}
+            >
+              <PlusCircle size={18} />
+              Add Product
+            </button>
+          )}
         </div>
 
         {/* Stats Cards */}
@@ -332,7 +348,7 @@ export default function Inventory() {
         <Table 
           tableName="All Products Inventory" 
           columns={columns} 
-          data={filteredProducts} 
+          data={data} 
           rowsPerPage={10} 
         />
 
