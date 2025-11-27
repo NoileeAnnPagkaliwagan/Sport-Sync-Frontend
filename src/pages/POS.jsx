@@ -12,64 +12,66 @@ export default function POS() {
   const [activeCategory, setActiveCategory] = useState("All");
   const [cart, setCart] = useState([]);
 
-
   useEffect(() => {
     setFiltered(
       activeCategory === "All"
         ? products
         : products.filter((p) =>
-            categories.find((c) => c.category_name === activeCategory && c.id === p.category_id)
+            categories.find(
+              (c) =>
+                c.category_name === activeCategory && c.id === p.category_id
+            )
           )
     );
   }, [activeCategory]);
 
-  {filtered.map((p) => {
-  const cartItem = cart.find((c) => c.id === p.id);
-  const inCartQuantity = cartItem ? cartItem.quantity : 0;
-  const isMaxed = inCartQuantity >= p.quantity; // disable if cart has reached stock
+  {
+    filtered.map((p) => {
+      const cartItem = cart.find((c) => c.id === p.id);
+      const inCartQuantity = cartItem ? cartItem.quantity : 0;
+      const isMaxed = inCartQuantity >= p.quantity; // disable if cart has reached stock
 
-  return (
-    <Product
-      key={p.id}
-      product={p}
-      onAdd={() => !isMaxed && addToCart(p)}
-      disabled={isMaxed}
-    />
-  );
-})}
-
-
-  
+      return (
+        <Product
+          key={p.id}
+          product={p}
+          onAdd={() => !isMaxed && addToCart(p)}
+          disabled={isMaxed}
+        />
+      );
+    });
+  }
 
   const addToCart = (product) => {
-  setCart((prev) => {
-    const existing = prev.find((item) => item.id === product.id);
-    if (existing) {
-      if (existing.quantity < product.quantity) {
-        return prev.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      } else return prev;
-    }
-    return product.quantity > 0 ? [...prev, { ...product, quantity: 1 }] : prev;
-  });
-};
+    setCart((prev) => {
+      const existing = prev.find((item) => item.id === product.id);
+      if (existing) {
+        // Prevent exceeding stock
+        if (existing.quantity < product.quantity) {
+          return prev.map((item) =>
+            item.id === product.id
+              ? { ...item, quantity: item.quantity + 1 }
+              : item
+          );
+        }
+        return prev;
+      }
+      // Include stock field from original product
+      return product.quantity > 0
+        ? [...prev, { ...product, quantity: 1, stock: product.quantity }]
+        : prev;
+    });
+  };
 
   const updateQuantity = (productId, delta) => {
-  setCart((prev) =>
-    prev
-      .map((item) => {
-        if (item.id === productId) {
-          const newQty = Math.min(item.quantity + delta, item.quantity); // temporary, need stock
-          return { ...item, quantity: Math.max(1, item.quantity + delta) };
-        }
-        return item;
-      })
-      .filter((item) => item.quantity > 0)
-  );
-};
+    setCart((prev) =>
+      prev.map((item) =>
+        item.id === productId
+          ? { ...item, quantity: Math.min(item.quantity + delta, item.stock) }
+          : item
+      )
+    );
+  };
 
   const removeItem = (productId) => {
     setCart((prev) => prev.filter((item) => item.id !== productId));
@@ -97,7 +99,7 @@ export default function POS() {
             />
           </div>
 
-          <div className="bg-softWhite border border-gray-300 p-4 rounded-xl overflow-x-auto max-h-115 [&::-webkit-scrollbar]:hidden -ms-overflow-style-none">
+          <div className="bg-softWhite border border-gray-300 p-4 rounded-xl overflow-x-auto max-h-115 hide-scrollbar -ms-overflow-style-none">
             <h2 className="text-lg font-semibold mb-2">
               {activeCategory === "All" ? "All Products" : activeCategory}
             </h2>
@@ -110,33 +112,35 @@ export default function POS() {
         </div>
 
         {/* Cart Column */}
-        <div className="w-[320px] bg-white rounded-xl border border-gray-300 shadow-sm p-4 flex flex-col">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <ShoppingCart size={18} /> Cart
-          </h2>
+<div className="w-[320px] bg-white rounded-xl border border-gray-300 shadow-sm p-4 flex flex-col
+                lg:h-[610px]"> 
+  <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+    <ShoppingCart size={18} /> Cart
+  </h2>
 
-          <div className="flex-1 overflow-y-auto pr-2 space-y-3">
-            <CartItem
-              cart={cart}
-              onIncrease={(id) => updateQuantity(id, 1)}
-              onDecrease={(id) => updateQuantity(id, -1)}
-              onRemove={removeItem}
-            />
-          </div>
+  {/* Cart Items */}
+  <div className="flex-1 overflow-y-auto pr-2 space-y-3">
+    <CartItem
+      cart={cart}
+      onIncrease={(id) => updateQuantity(id, 1)}
+      onDecrease={(id) => updateQuantity(id, -1)}
+      onRemove={removeItem}
+    />
+  </div>
 
-          <div className="border-t border-gray-300 pt-4 mt-4 space-y-2">
-            <div className="flex justify-between font-semibold text-base">
-              <span>Total</span>
-              <span>₱{totalAmount.toFixed(2)}</span>
-            </div>
+  {/* Summary */}
+  <div className="border-t border-gray-300 pt-4 mt-4 space-y-2">
+    <div className="flex justify-between font-semibold text-base">
+      <span>Total</span>
+      <span>₱{totalAmount.toFixed(2)}</span>
+    </div>
 
-            <button
-              className="w-full mt-3 bg-darkGreen text-white py-2 rounded-lg hover:bg-navyBlue transition font-semibold"
-            >
-              Checkout
-            </button>
-          </div>
-        </div>
+    <button className="w-full mt-3 bg-darkGreen text-white py-2 rounded-lg hover:bg-navyBlue transition font-semibold">
+      Checkout
+    </button>
+  </div>
+</div>
+
       </div>
     </Layout>
   );

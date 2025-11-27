@@ -27,7 +27,7 @@ export default function Product({ product, onAdd, disabled }) {
           className={`px-3 py-1 rounded flex items-center space-x-1 transition ${
             disabled
               ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-              : "bg-navyBlue text-white hover:bg-darkGreen"
+              : "bg-navyBlue text-white hover:bg-darkGreen cursor-pointer"
           }`}
           onClick={onAdd}
           disabled={disabled}
