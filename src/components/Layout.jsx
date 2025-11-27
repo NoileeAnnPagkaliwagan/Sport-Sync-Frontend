@@ -42,25 +42,20 @@ export default function Layout({ children }) {
         </div>
       </div>
 
-      {/* Main Content Area - Dynamically adjusts */}
-      <div className={`
-        flex-1 flex flex-col 
-        /* Mobile: full width */
-        w-full
-        /* Desktop */
-        lg:transition-all lg:duration-300 lg:ease-in-out
-        ${isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-64'}
-      `}>
-        <Navbar setOpenSidebar={setOpenSidebar} />
-        <main className={`
-          flex-1 p-6 overflow-auto
-          /* Desktop */
-          lg:transition-all lg:duration-300 lg:ease-in-out
-          ${isSidebarCollapsed ? 'lg:w-[calc(100vw-5rem)]' : 'lg:w-[calc(100vw-16rem)]'}
-        `}>
-          {children}
-        </main>
-      </div>
+      {/* Main Content Area */}
+
+<div className={`
+  flex-1 flex flex-col 
+  w-full
+  lg:transition-all lg:duration-300 lg:ease-in-out
+  ${isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-64'}
+`}>
+  <Navbar setOpenSidebar={setOpenSidebar} />
+  <main className="flex-1 p-6 overflow-auto">
+    {children}
+  </main>
+</div>
+
     </div>
   );
 }
