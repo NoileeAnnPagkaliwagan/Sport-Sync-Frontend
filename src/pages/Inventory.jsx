@@ -5,7 +5,7 @@ import KpiCard from "../components/KpiCard";
 import { categories } from "../mockData";
 import { useAuth } from "../context/AuthContext";
 import { getCategoryMap } from "../utils/Utils.js";
-import { Edit, PlusCircle } from "lucide-react";
+import { Edit, PlusCircle, X } from "lucide-react";
 import { Package, AlertTriangle, TrendingDown, DollarSign } from 'lucide-react';
 import { Search, Filter } from 'lucide-react';
 
@@ -125,6 +125,22 @@ export default function Inventory() {
   const { user } = useAuth();
   const categoryMap = getCategoryMap(categories);
 
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Form states
+  const [formData, setFormData] = useState({
+    productName: "",
+    category: "",
+    description: "",
+    sellingPrice: "0.00",
+    costPrice: "0.00",
+    initialStock: "0",
+    reorderPoint: "10",
+    supplier: "",
+    barcode: "Auto-generated"
+  });
+
   // Filter states
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
@@ -208,6 +224,35 @@ export default function Inventory() {
       ) : null,
   }));
 
+  // Handle form input changes
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    // Add your submit logic here
+    setIsModalOpen(false);
+    // Reset form
+    setFormData({
+      productName: "",
+      category: "",
+      description: "",
+      sellingPrice: "0.00",
+      costPrice: "0.00",
+      initialStock: "0",
+      reorderPoint: "10",
+      supplier: "",
+      barcode: "Auto-generated"
+    });
+  };
+
   return (
     <Layout>
       <div className="space-y-5">
@@ -226,7 +271,7 @@ export default function Inventory() {
           {/* Add Product Button */}
           {(user.role === "Admin" || user.role === "Staff") && (
             <button 
-              onClick={() => console.log("Add Product clicked")}
+              onClick={() => setIsModalOpen(true)}
               className="text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
               style={{ backgroundColor: '#004B8D' }}
               onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#003366'}
@@ -353,6 +398,187 @@ export default function Inventory() {
         />
 
       </div>
+
+      {/* Add Product Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-softWhite rounded-lg shadow-xl w-full max-w-md max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="bg-navyBlue flex items-center justify-between p-6 border-b">
+              <div>
+                <h2 className="text-xl font-semibold text-gray-200">Add New Sports Product</h2>
+                <p className="text-sm text-gray-200 mt-1">
+                  Fill in the details below to add a new sports equipment item to your inventory.
+                </p>
+              </div>
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="text-gray-300 hover:text-slateGray transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Modal Body */}
+            <div className="p-6">
+              <div className="space-y-4">
+                {/* Product Name and Category Row */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Product Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="productName"
+                      value={formData.productName}
+                      onChange={handleInputChange}
+                      placeholder="Product name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent bg-gray-50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Category <span className="text-red-500">*</span>
+                    </label>
+                    <select
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent bg-gray-50"
+                    >
+                      <option value="">Select category</option>
+                      {categories.map((cat) => (
+                        <option key={cat.category_id} value={cat.category_id}>
+                          {cat.category_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Description
+                  </label>
+                  <textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    placeholder="Product description"
+                    rows="3"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent bg-gray-50 resize-none"
+                  />
+                </div>
+
+                {/* Selling Price and Cost Price Row */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Selling Price <span className="text-red-500">*</span> (₱)
+                    </label>
+                    <input
+                      type="number"
+                      name="sellingPrice"
+                      value={formData.sellingPrice}
+                      onChange={handleInputChange}
+                      placeholder="0.00"
+                      step="0.01"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent bg-gray-50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Cost Price (₱)
+                    </label>
+                    <input
+                      type="number"
+                      name="costPrice"
+                      value={formData.costPrice}
+                      onChange={handleInputChange}
+                      placeholder="0.00"
+                      step="0.01"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent bg-gray-50"
+                    />
+                  </div>
+                </div>
+
+                {/* Initial Stock and Reorder Point Row */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Initial Stock
+                    </label>
+                    <input
+                      type="number"
+                      name="initialStock"
+                      value={formData.initialStock}
+                      onChange={handleInputChange}
+                      placeholder="0"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent bg-gray-50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Reorder Point
+                    </label>
+                    <input
+                      type="number"
+                      name="reorderPoint"
+                      value={formData.reorderPoint}
+                      onChange={handleInputChange}
+                      placeholder="10"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent bg-gray-50"
+                    />
+                  </div>
+                </div>
+
+                {/* Supplier and Barcode Row */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Supplier
+                    </label>
+                    <input
+                      type="text"
+                      name="supplier"
+                      value={formData.supplier}
+                      onChange={handleInputChange}
+                      placeholder="Supplier name"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-navyBlue focus:border-transparent bg-gray-50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Barcode
+                    </label>
+                    <input
+                      type="text"
+                      name="barcode"
+                      value={formData.barcode}
+                      onChange={handleInputChange}
+                      placeholder="Auto-generated"
+                      disabled
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 cursor-not-allowed"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 border-t">
+              <button
+                onClick={handleSubmit}
+                className="w-full bg-navyBlue text-white py-3 rounded-lg font-medium hover:bg-green-800 transition-colors"
+              >
+                Add Product
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
     </Layout>
     
