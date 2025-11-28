@@ -21,7 +21,7 @@ export default function Table({ tableName, columns = [], data = [], rowsPerPage 
   };
 
   return (
-    <div className="w-full bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+    <div className="w-full bg-softWhite rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
       
       {/* --- Table Header Section --- */}
       {tableName && (
@@ -67,7 +67,7 @@ export default function Table({ tableName, columns = [], data = [], rowsPerPage 
                   {columns.map((col, i) => (
                     <td 
                         key={i} 
-                        className="px-6 py-4 text-sm text-slate-700 whitespace-nowrap group-hover:text-[#002B50]"
+                        className="px-6 py-4 text-sm text-slate-700 whitespace-nowrap group-hover:text-navyBlue"
                     >
                       {/* Render custom component or raw value */}
                       {col.render ? col.render(row, idx) : row[col.accessor] || "-"}
@@ -95,7 +95,7 @@ export default function Table({ tableName, columns = [], data = [], rowsPerPage 
             <button
               onClick={goFirst}
               disabled={currentPage === 1}
-              className="p-2 rounded-lg text-slate-500 hover:bg-white hover:text-[#002B50] hover:shadow-sm disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+              className="p-2 rounded-lg text-slate-500 hover:bg-white hover:text-navyBlue hover:shadow-sm disabled:opacity-30 disabled:hover:bg-transparent transition-all"
               title="First Page"
             >
               <ChevronsLeft size={18} />
@@ -104,7 +104,7 @@ export default function Table({ tableName, columns = [], data = [], rowsPerPage 
             <button
               onClick={goPrev}
               disabled={currentPage === 1}
-              className="p-2 rounded-lg text-slate-500 hover:bg-white hover:text-[#002B50] hover:shadow-sm disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+              className="p-2 rounded-lg text-slate-500 hover:bg-white hover:text-navyBlue hover:shadow-sm disabled:opacity-30 disabled:hover:bg-transparent transition-all"
               title="Previous"
             >
               <ChevronLeft size={18} />
@@ -119,7 +119,7 @@ export default function Table({ tableName, columns = [], data = [], rowsPerPage 
                 max={totalPages}
                 value={currentPage}
                 onChange={handlePageInput}
-                className="w-12 h-8 text-center text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-[#1f781a]/20 focus:border-[#1f781a] transition-all outline-none"
+                className="w-12 h-8 text-center text-sm border border-slate-300 rounded-md focus:ring-2 focus:ring-darkGreen/20 focus:border-darkGreen transition-all outline-none"
               />
               <span className="text-sm text-slate-600">of {totalPages}</span>
             </div>
@@ -127,7 +127,7 @@ export default function Table({ tableName, columns = [], data = [], rowsPerPage 
             <button
               onClick={goNext}
               disabled={currentPage === totalPages}
-              className="p-2 rounded-lg text-slate-500 hover:bg-white hover:text-[#002B50] hover:shadow-sm disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+              className="p-2 rounded-lg text-slate-500 hover:bg-white hover:text-navyBlue hover:shadow-sm disabled:opacity-30 disabled:hover:bg-transparent transition-all"
               title="Next"
             >
               <ChevronRight size={18} />
@@ -136,7 +136,7 @@ export default function Table({ tableName, columns = [], data = [], rowsPerPage 
             <button
               onClick={goLast}
               disabled={currentPage === totalPages}
-              className="p-2 rounded-lg text-slate-500 hover:bg-white hover:text-[#002B50] hover:shadow-sm disabled:opacity-30 disabled:hover:bg-transparent transition-all"
+              className="p-2 rounded-lg text-slate-500 hover:bg-white hover:text-navyBlue hover:shadow-sm disabled:opacity-30 disabled:hover:bg-transparent transition-all"
               title="Last Page"
             >
               <ChevronsRight size={18} />
