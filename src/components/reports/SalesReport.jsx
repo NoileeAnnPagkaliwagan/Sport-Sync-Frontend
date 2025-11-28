@@ -5,7 +5,7 @@ import Table from "../../components/Table";
 import { DollarSign, ShoppingCart, Activity, Star } from "lucide-react";
 import { products, sales, categories, transactions } from "../../mockData";
 
-// ... (Keep Data Preparation logic same as before) ...
+
 // 1. Line Chart Data
 const lineDates = sales.daily.map((d) => d.date);
 const salesTrend = sales.daily.map((d) => d.volume);
@@ -170,7 +170,6 @@ export default function SalesReport() {
             categories={lineDates}
             series={filteredTrendSeries}
             height={340}
-            // Pass the dropdown as a prop
             filter={
                 <select
                     value={trendFilter}
@@ -191,7 +190,6 @@ export default function SalesReport() {
             categories={categoryNames}
             series={categoryChartData()}
             height={340}
-            // Pass the dropdown as a prop
             filter={
                 <select
                     value={categoryFilter}

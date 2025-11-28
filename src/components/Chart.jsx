@@ -211,7 +211,7 @@ export default function Chart({
   if (!hasData) {
     return (
       <div className={containerClasses} style={{ height: `${height + 50}px` }}>
-        {title && <h3 className="text-[#002B50] font-bold text-lg mb-4">{title}</h3>}
+        {title && <h3 className="text-navyBlue font-bold text-lg mb-4">{title}</h3>}
         <div className="flex flex-col items-center justify-center h-full opacity-50">
            <p className="text-slate-400 font-medium text-sm">No data available</p>
         </div>
@@ -222,11 +222,11 @@ export default function Chart({
   return (
     <div className={containerClasses}>
       
-      {/* --- NEW HEADER SECTION INSIDE CONTAINER --- */}
+
       {(title || filter) && (
         <div className="flex justify-between items-center mb-6 pl-1">
             {title && (
-              <h3 className="text-[#002B50] font-bold text-lg tracking-tight">
+              <h3 className="title">
                 {title}
               </h3>
             )}
