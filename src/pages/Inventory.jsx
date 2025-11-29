@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import Table from "../components/Table";
 import KpiCard from "../components/KpiCard";
 import Filter from "../components/Filter";
+import Scanner from "../components/Scanner.jsx";
 import EditProductModal from "../components/inventory/EditProductModal.jsx";
 import { categories } from "../mockData";
 import { useAuth } from "../context/AuthContext";
@@ -248,7 +249,13 @@ export default function Inventory() {
             </p>
           </div>
 
-          {/* Add Product Button */}
+          {/* Scanner & Add Button */}
+                <div className="flex flex-col sm:flex-row justify-en items-start sm:items-center gap-4 shrink-0 mt-15 lg:mt-0">
+                  <div className="w-full sm:w-auto">
+                      {/* insert search component */}
+                       <Scanner />
+
+         {/* Add Product Button */}
           {(user.role === "Admin" || user.role === "Staff") && (
             <button
               onClick={() => setIsModalOpen(true)}
@@ -265,6 +272,10 @@ export default function Inventory() {
               Add Product
             </button>
           )}
+
+                      </div>
+                   </div>
+
         </div>
 
         {/* Stats Cards */}

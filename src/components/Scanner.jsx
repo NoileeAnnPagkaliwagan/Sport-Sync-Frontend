@@ -157,33 +157,29 @@ export default function Scanner({ onScan }) {
               </button>
             </div>
 
-            {/* Video Area */}
-            <div className="relative flex flex-col items-center justify-center h-64 bg-black rounded-lg overflow-hidden ring-1 ring-slate-200">
-              {errorMsg ? (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center text-white p-4 text-center z-20">
-                      <Camera size={32} className="mb-2 text-red-500" />
-                      <p className="text-sm font-medium">{errorMsg}</p>
-                  </div>
-              ) : (
-                  <video
-                    ref={videoRef}
-                    className="w-full h-full object-cover"
-                    muted
-                    playsInline
-                  />
-              )}
+            {/* Video Scanner Container */}
+            <div className="relative flex flex-col items-center justify-center h-64 bg-black rounded-lg overflow-hidden">
+              <video
+                ref={videoRef}
+                className="w-full h-full object-cover opacity-80"
+                muted
+                autoPlay
+              />
 
-              {!errorMsg && (
-                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
-                    <div className="w-64 h-32 border-2 border-green-400 rounded-lg relative shadow-[0_0_0_1000px_rgba(0,0,0,0.5)] overflow-hidden">
-                      <div className="absolute left-0 w-full h-[2px] bg-red-500 animate-scanner-line shadow-[0_0_4px_rgba(239,68,68,1)]"></div>
-                      <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-white -mt-px -ml-px"></div>
-                      <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-white -mt-px -mr-px"></div>
-                      <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-white -mb-px -ml-px"></div>
-                      <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-white -mb-px -mr-px"></div>
-                    </div>
-                  </div>
-              )}
+              {/* --- Visual Guides --- */}
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                {/* 1. The Focus Rectangle (added overflow-hidden) */}
+                <div className="w-64 h-32 border-2 border-green-400 rounded-lg relative shadow-[0_0_0_1000px_rgba(0,0,0,0.5)] overflow-hidden">
+                  {/* Corner markers */}
+                  <div className="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-green-500 -mt-1 -ml-1"></div>
+                  <div className="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 border-green-500 -mt-1 -mr-1"></div>
+                  <div className="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 border-green-500 -mb-1 -ml-1"></div>
+                  <div className="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-green-500 -mb-1 -mr-1"></div>
+
+                  {/* 2. Moving Red Laser Line */}
+                  <div className = "absolute left-0 w-full h-[2px] bg-red-500 animate-scanner-line"></div>
+                </div>
+              </div>
             </div>
 
             <p className="text-xs text-center text-slate-400 font-medium">
