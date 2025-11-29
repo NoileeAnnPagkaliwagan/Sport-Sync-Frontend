@@ -64,6 +64,20 @@ export default function POS() {
     });
   };
 
+  // --- NEW: SCANNER HANDLER ---
+  const handleScanResult = (barcodeText) => {
+    // 1. Find product in mockData using the scanned barcode
+    // Ensure your mockData products have a 'barcode' field to match against
+    const foundProduct = products.find(p => p.barcode === barcodeText);
+
+    if (foundProduct) {
+        addToCart(foundProduct);
+        setToast({ message: `Added: ${foundProduct.product_name}`, type: "success" });
+    } else {
+        setToast({ message: `Product not found (Barcode: ${barcodeText})`, type: "error" });
+    }
+  };
+
   const updateQuantity = (productId, delta) => {
     setCart((prev) =>
       prev.map((item) => {
@@ -104,21 +118,22 @@ export default function POS() {
       <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-8rem)]">
         
         {/* --- LEFT COLUMN: PRODUCTS --- */}
-        <div className="flex-1 flex flex-col gap-4 h-full overflow-hidden relative z-10">
+        <div className="flex-1 flex flex-col gap-4 h-full overflow-hidden">
           
-{/* Header & Search */}
-<div className="shrink-0 mt-16 lg:mt-0 w-full mb-4 relative z-10"> 
-  <div className="flex items-center gap-3 w-full">
-    {/* Search Component */}
-    
+          {/* Header & Search */}
+          <div className="shrink-0 mt-16 lg:mt-0 w-full mb-4 relative z-[60]"> 
+            <div className="flex items-center gap-3 w-full">
+              {/* Search Component */}
+              <div className="flex-1">
+                <Search />
+              </div>
 
-    {/* Scanner Component */}
-    <div className="shrink-0">
-      <Scanner />
-      <Search />
-    </div>
-  </div>
-</div>
+              {/* Scanner Component - Pass the handler here */}
+              <div className="shrink-0">
+                <Scanner onScan={handleScanResult} />
+              </div>
+            </div>
+          </div>
 
           {/* Categories */}
           <div className="shrink-0">
@@ -130,7 +145,7 @@ export default function POS() {
           </div>
 
           {/* Products Grid Area */}
-          <div className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl p-4 overflow-y-auto hide-scrollbar shadow-inner">
+          <div className="flex-1 bg-slate-50 border border-slate-200 rounded-2xl p-4 overflow-y-auto hide-scrollbar shadow-inner relative z-0">
             <div className="flex items-center justify-between mb-4">
                  <h2 className="text-navyBlue font-bold text-lg tracking-tight">
                   {activeCategory === "All" ? "All Products" : activeCategory}

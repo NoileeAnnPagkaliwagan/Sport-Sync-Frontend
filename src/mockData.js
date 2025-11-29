@@ -16,7 +16,7 @@ export const categories = [
 
 // PRODUCTS
 export const products = [
-  { id: 1, barcode: "SP1001", product_name: "Nike Soccer Cleats", category_id: 1, cost_price: 500, selling_price: 1000, quantity: 25 },
+  { id: 1, barcode: "4800047862557", product_name: "Nike Soccer Cleats", category_id: 1, cost_price: 500, selling_price: 1000, quantity: 25 },
   { id: 2, barcode: "SP1002", product_name: "Adidas Basketball", category_id: 2, cost_price: 200, selling_price: 400, quantity: 40 },
   { id: 3, barcode: "SP1003", product_name: "Puma Training Shorts", category_id: 3, cost_price: 150, selling_price: 300, quantity: 60 },
   { id: 4, barcode: "SP1004", product_name: "Fitness Gloves", category_id: 4, cost_price: 100, selling_price: 150, quantity: 50 },

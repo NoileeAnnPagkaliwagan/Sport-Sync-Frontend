@@ -1,4 +1,5 @@
 import { useState } from "react";
+import ExportButton from "../../components/ExportButton";
 import Table from "../../components/Table";
 import { transactions, products } from "../../mockData";
 import { Eye } from "lucide-react";
@@ -83,7 +84,13 @@ export default function SalesReport() {
   ];
 
   return (
-    <div>
+    <div className="flex flex-col space-y-6">
+      <div className="flex gap-5 justify-end">
+                    <div>
+                      <ExportButton />
+                    </div>
+                    {/* insert calendar */}
+                  </div>
       <Table
         tableName="Transaction History"
         columns={columns}
