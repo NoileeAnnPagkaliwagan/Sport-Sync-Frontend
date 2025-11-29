@@ -20,7 +20,7 @@ export default function Alerts() {
     ];
 
     return (
-        <div className="p-6 max-w-6xl bg-softWhite rounded-lg">
+        <div className="p-6 max-w-7xl bg-softWhite rounded-lg">
             <div className="flex items-center gap-2 mb-6">
                 <Bell size={20} className="text-gray-900" />
                 <h2 className="text-base font-normal text-gray-900">Stock Alert Configuration</h2>
